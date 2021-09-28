@@ -1,0 +1,5 @@
+User can
+Move between Rooms
+Fight enemies
+pickup Items
+Get Stronger by leveling to do this he needs to win fights versus enemies that are contained in rooms

@@ -1,0 +1,11 @@
+Extends Entity
+
+Variables:
+Location(Stores the current rooms position)
+Backpack(contains items)
+
+Methodes:
+Move
+PickUpItem
+ShowInvetory
+useHealingPotion

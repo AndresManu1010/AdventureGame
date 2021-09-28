@@ -1,0 +1,4 @@
+Variables:
+Location
+Enemy
+Items

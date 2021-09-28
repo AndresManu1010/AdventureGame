@@ -1,0 +1,25 @@
+Variables:
+AttackList(A Arraylist that contains the Attack moves that This entity can use)
+MaxHealth
+CurrentHealth
+BaseAttackDMG
+CharacterName/name
+Level
+ClassType(Enum Which Determines strengths and weeknesses)
+Statuses(Is an arraylist that contains Status effects like
+Frozen/Stund	Cant attack next turn,
+Burned/Poisoned	Damage based on health% on round end)
+
+
+Methodes:
+PrintStats(Prints all important stats)
+LevelUp(Raises the characters stats)
+takeDMG()
+TakePercentDMG
+LearnAttack()
+HealPercent()
+healFlat()
+
+
+
+getters And setters
