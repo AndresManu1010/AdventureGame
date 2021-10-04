@@ -7,5 +7,11 @@ Beschreibung:
 ==============================================================*/
 
 public enum CharacterClass {
-
+    SABER,
+    ARCHER,
+    LANCER,
+    CASTER,
+    ASSASSIN,
+    RIDER,
+    BERSERKER
 }

@@ -6,5 +6,15 @@ ProjektName:    Project
 Beschreibung: 
 ==============================================================*/
 
-public class Skillbook {
+import com.company.Attacks.Attack;
+import com.company.Enums.AttackType;
+import com.company.Enums.ItemRarity;
+
+public class SkillBook extends Item{
+    private Attack attack;
+    public SkillBook(ItemRarity rarity, String name, String attackName, String chant, double baseDMG, AttackType type) {
+        super(rarity, name);
+        attack = new Attack(attackName,chant,baseDMG,type);
+    }
 }
+

@@ -1,0 +1,25 @@
+Burning Arrow
+BA
+FIRE
+10
+--------------
+Lightning Arrow
+LA
+ELECTRO
+7.5
+--------------
+Melted Ice Arrows
+MI
+WATER
+7.5
+---------------
+Sneak-Shot
+SS
+DARK
+7.5
+----------------
+Ice Arrow
+IA
+FROST
+7.5
+-----------------

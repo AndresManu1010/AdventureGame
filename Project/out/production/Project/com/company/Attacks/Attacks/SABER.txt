@@ -1,0 +1,24 @@
+Holy Blade
+HB
+LIGHT
+15
+-----------
+Broken Blade
+BB
+IRON
+12.5
+-----------
+Fiery Sword
+FS
+FIRE
+7.5
+-------------
+Icy Sword
+IS
+FROST
+7.5
+-------------
+Crystalasation
+CR
+GEO
+5

@@ -1,0 +1,24 @@
+Fire Ball
+FB
+FIRE
+10
+----------------------
+Ice Spike
+IS
+FROST
+10
+--------------------
+Lightning Bolt
+LB
+ELECTRO
+17
+--------------------
+Waterbolt
+WB
+WATER
+7.5
+-------------------
+Sludge Bomb
+SB
+POISON
+5

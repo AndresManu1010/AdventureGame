@@ -6,5 +6,11 @@ ProjektName:    Project
 Beschreibung: 
 ==============================================================*/
 
-public class Player {
+import com.company.Enums.CharacterClass;
+
+public class Player extends Entity {
+
+    public Player(String name, double maxHealth, double baseAttackDamage, int level, CharacterClass entityClass) {
+        super(name, maxHealth, baseAttackDamage, level,entityClass);
+    }
 }

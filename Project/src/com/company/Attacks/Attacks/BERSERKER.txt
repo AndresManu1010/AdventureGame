@@ -1,0 +1,19 @@
+Relentles Strikes
+RS
+NONE
+15
+-----------------
+Heavy Rain
+HR
+WATER
+7.5
+-----------------
+Frozen Fists
+FF
+FROST
+7.5
+----------------
+Heated Fists
+HF
+FIRE
+7.5

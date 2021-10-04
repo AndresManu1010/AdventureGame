@@ -1,0 +1,24 @@
+Posioned Stinger
+PS
+POISON
+5
+--------------
+Stealth Strike
+SS
+DARK
+7.5
+------------
+Burning Dagger
+BD
+FIRE
+10
+------------
+Iced Dagger
+ID
+FROST
+10
+-------------
+Fast Slashing
+FS
+NONE
+15

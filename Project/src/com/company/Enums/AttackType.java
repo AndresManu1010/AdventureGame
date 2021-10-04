@@ -7,5 +7,11 @@ Beschreibung:
 ==============================================================*/
 
 public enum AttackType {
-
+    FIRE,
+    FROST,
+    ELECTRO,
+    WATER,
+    LIGHT,
+    DARK,
+    POISON
 }

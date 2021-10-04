@@ -1,0 +1,24 @@
+Rapidfire Hit
+RH
+FIRE
+7.5
+-----------
+Chilling Ride
+CR
+FROST
+10
+--------------
+Thunder Ride
+TR
+ELECTRO
+17.5
+--------------
+Rainy Track
+RT
+WATER
+5
+--------------
+Poisonous Fangs
+PF
+POISON
+7.5

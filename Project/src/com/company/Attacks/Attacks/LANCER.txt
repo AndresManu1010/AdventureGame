@@ -1,0 +1,19 @@
+Rapid Strikes
+RS
+NONE
+15
+------------------
+Molten Lance
+ML
+FIRE
+7.5
+----------------
+Ice Cold Lance
+ICL
+FROST
+10
+-----------------
+Rusty Lance
+RL
+IRON
+12.5
