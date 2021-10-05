@@ -1,0 +1,41 @@
+Thousand Flames Book
+LEGENDARY
+Thousand Flames
+THF
+FIRE
+50
+-------------------
+Deep Waters Book
+LEGENDARY
+Deep Waters
+DEW
+WATER
+50
+-------------------
+Dark Purity Book
+LEGENDARY
+Dark Purity
+DPU
+DARK
+50
+-------------------
+Everfrost Book
+LEGENDARY
+Everfrost
+EVF
+FROST
+50
+-------------------
+Shining Bright Book
+LEGENDARY
+Shining Bright
+SHB
+LIGHT
+50
+-------------------
+Crushing Walls Book
+LEGENDARY
+Crushing Walls
+CRW
+EARTH
+50

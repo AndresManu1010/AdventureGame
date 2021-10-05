@@ -7,5 +7,8 @@ Beschreibung:
 ==============================================================*/
 
 public enum EntityStatus {
-
+    ONFIRE,
+    STUNNED,
+    POISONED,
+    FROSTBURN;
 }

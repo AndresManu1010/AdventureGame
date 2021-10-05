@@ -16,5 +16,14 @@ public class SkillBook extends Item{
         super(rarity, name);
         attack = new Attack(attackName,chant,baseDMG,type);
     }
+
+    public SkillBook(SkillBook skillBook) {
+        super(skillBook.getRarity(),skillBook.getName());
+        attack= new Attack(skillBook.getAttack());
+    }
+
+    public Attack getAttack() {
+        return attack;
+    }
 }
 

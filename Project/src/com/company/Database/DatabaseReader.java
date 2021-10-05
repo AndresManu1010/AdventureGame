@@ -82,7 +82,7 @@ public class DatabaseReader {
                 String chant = scan.nextLine();
                 String type = scan.nextLine();
                 ItemRarity rarity = ItemRarity.COMMON;
-                AttackType attackType = AttackType.DARK;
+                AttackType attackType = AttackType.NONE;
                 Double dmg;
                 switch (type) {
                     case "FIRE" -> attackType = AttackType.FIRE;

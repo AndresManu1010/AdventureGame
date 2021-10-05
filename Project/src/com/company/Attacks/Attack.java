@@ -24,7 +24,7 @@ public class Attack {
     }
 
     public double upgradeDamage(double dmgMultiplier){
-        this.damage= this.damage * (1+ dmgMultiplier);
+        this.damage= this.damage * (1+ dmgMultiplier) + 3;
         return this.damage;
     }
 

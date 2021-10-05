@@ -1,0 +1,25 @@
+HealingPotion LV1
+COMMON
+50
+1
+------------
+HealingPotion LV2
+UNCOMMON
+75
+2
+------------
+HealingPotion LV3
+RARE
+100
+3
+------------
+HealingPotion LV4
+EPIC
+150
+5
+------------
+HealingPotion LV5
+LEGENDARY
+250
+10
+------------
