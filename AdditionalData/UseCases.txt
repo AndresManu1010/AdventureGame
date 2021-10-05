@@ -1,0 +1,12 @@
+what can the User do?
+
+the user can move through randomly generated Rooms.
+Rooms contain Items as well as enemys.
+There is a chance that the Player enters a Boss-Room. A Boss room contains better items but a stronger enemy.
+Defeating a boss will result in a map reset. Future enemies will also be stronger.
+
+The user can then fight the enemy in the room to continue his adventure.
+After a succesfull fight the user can pick up the items in the room.
+The user fights enemies to grow stronger(level up).
+
+The player can use Items to heal himself and learn new Attacks.
