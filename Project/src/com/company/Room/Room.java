@@ -38,4 +38,8 @@ public class Room {
     public void removeItems(){
         this.items =  new ArrayList<>();
     }
+
+    public boolean isBossRoom() {
+        return isBossRoom;
+    }
 }

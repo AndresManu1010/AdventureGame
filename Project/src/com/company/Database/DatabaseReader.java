@@ -11,7 +11,6 @@ import com.company.Enums.AttackType;
 import com.company.Enums.CharacterClass;
 import com.company.Enums.ItemRarity;
 import com.company.Items.HealingPotion;
-import com.company.Items.Item;
 import com.company.Items.SkillBook;
 
 import java.io.File;

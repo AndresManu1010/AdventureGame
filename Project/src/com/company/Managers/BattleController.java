@@ -35,7 +35,7 @@ public class BattleController {
         System.out.println("Class: " + enemy.getEntityClass());
 
         while (player.isAlive() && enemy.isAlive()) {
-            System.out.println("|-------------------------------------------------------------|");
+            System.out.println("|---------------------------------------------------|");
             dealDotDMG(player, true);
             if (player.isAlive()) {
                 if (!player.isStunned()) {
@@ -62,7 +62,6 @@ public class BattleController {
             System.out.println("|-------------------------------------------------------------|");
         }
     }
-
     private void playerAttack() {
         String choice = "";
         Scanner scan = new Scanner(System.in);
@@ -99,47 +98,50 @@ public class BattleController {
         lastPlayerAttackType = currentPlayerAttackType;
         currentPlayerAttackType = player.getAttacks().get(choice).getType();
 
-        dmg = calcDMG((player.getAttacks().get(choice).getDamage() + player.getBaseAttackDamage()), player.getName(), true);
+        dmg = calcDMG((player.getAttacks().get(choice).getDamage() + player.getBaseAttackDamage()), baseMultiplier(player.getName()),elementalReaction(true), classAdvantage(true));
         enemy.takeDamage(dmg);
         System.out.printf("You dealt %.0f DMG\n", dmg);
     }
-
     private void enemyAttack() {
         Attack attack = enemy.getRandomAttack();
         double dmg = attack.getDamage();
         lastEnemyAttackType = currentEnemyAttackType;
         currentEnemyAttackType = attack.getType();
         System.out.println(Color.RED + enemy.getName() + " used " + attack.getName() + Color.RESET);
-        dmg = calcDMG((dmg + enemy.getBaseAttackDamage()), enemy.getName(), false);
+
+        dmg = calcDMG((dmg + enemy.getBaseAttackDamage()), baseMultiplier(enemy.getName()) ,elementalReaction(false),classAdvantage(false));
         player.takeDamage(dmg);
         System.out.printf("You took %.0f DMG\n", dmg);
 
     }
+    private double baseMultiplier(String attackerName){
+       Random rand = new Random();
+    double multiplier;
+    double randNum = rand.nextInt(10) + 1;
+    int lessDmgCheck = rand.nextInt(2);
+    int crit = rand.nextInt(10) + 1;
+    if (lessDmgCheck == 1) {
+        multiplier = 1 - (randNum / 10) + 0.5;
+    } else {
+        multiplier = 1 + (randNum / 10);
+    }
+    if (crit == 10) {
+        System.out.println(Color.RED + attackerName + " Landed a Critical hit" + Color.RESET);
+        multiplier = multiplier * 1.5 + 0.5;
+    }
+    return multiplier;
+}
+    private double calcDMG(double dmg, double baseMultiplier,double elementalReactionMultiplier, double classAdvantageMultiplier) {
 
-    private double calcDMG(double dmg, String attackerName, Boolean playerAttack) {
-        Random rand = new Random();
 
-        double multiplyer;
-        double randNum = rand.nextInt(10) + 1;
-        int lessDmgCheck = rand.nextInt(2);
-        int crit = rand.nextInt(10) + 1;
-        if (lessDmgCheck == 1) {
-            multiplyer = 1 - (randNum / 10) + 0.5;
-        } else {
-            multiplyer = 1 + (randNum / 10);
-        }
-        if (crit == 10) {
-            System.out.println(Color.RED + attackerName + " Landed a Critical hit" + Color.RESET);
-            multiplyer = multiplyer * 1.5 + 0.5;
-        }
+        double multiplier = 1;
 
 
-        multiplyer = multiplyer * elementalReaction(playerAttack) * classAdvantage(playerAttack);
-        System.out.println(Color.YELLOW + "Multiplier : " + multiplyer + Color.RESET);
-        dmg = ((int) (dmg * multiplyer));
+        multiplier = multiplier * baseMultiplier * elementalReactionMultiplier * classAdvantageMultiplier;
+        System.out.println(Color.YELLOW + "Multiplier : " + multiplier + Color.RESET);
+        dmg = ((int) (dmg * multiplier));
         return dmg;
     }
-
     private double elementalReaction(boolean isPlayerAttack) {
         double elementalBonus = 1;
         AttackType lastAttackType;
@@ -310,8 +312,6 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
         System.out.print(Color.RESET);
         return elementalBonus;
     }
-
-
     private double classAdvantage(boolean isPlayerAttack) {
         int attackerClass = 0;
         int defenderClass = 0;
@@ -351,9 +351,50 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             default -> 1;
         };
     }
-
     private void dealDotDMG(Entity e, boolean isPlayer) {
 
+        if (e.isPoisoned()) {
+            e.takeCurrentHealthDamage(11, "poison");
+            if (isPlayer) {
+                playerEffectTurns[1] = playerEffectTurns[1] - 1;
+                if (playerEffectTurns[1] == 0) {
+                    e.removeStatus(EntityStatus.POISONED);
+                }
+            } else {
+                enemyEffectTurns[1] = enemyEffectTurns[1] - 1;
+                if (enemyEffectTurns[1] == 0) {
+                    e.removeStatus(EntityStatus.POISONED);
+                }
+            }
+        }
+        if (e.isOnFire()) {
+            e.takeMaxLifeDamage(6, "fire");
+            if (isPlayer) {
+                playerEffectTurns[0] = playerEffectTurns[0] - 1;
+                if (playerEffectTurns[0] == 0) {
+                    e.removeStatus(EntityStatus.ONFIRE);
+                }
+            } else {
+                enemyEffectTurns[0] = enemyEffectTurns[0] - 1;
+                if (enemyEffectTurns[0] == 0) {
+                    e.removeStatus(EntityStatus.ONFIRE);
+                }
+            }
+        }
+        if (e.isFrostBurned()) {
+            e.takeMaxLifeDamage(7, "sheer Cold");
+            if (isPlayer) {
+                playerEffectTurns[2] = playerEffectTurns[2] - 1;
+                if (playerEffectTurns[2] == 0) {
+                    e.removeStatus(EntityStatus.FROSTBURN);
+                }
+            } else {
+                enemyEffectTurns[2] = enemyEffectTurns[2] - 1;
+                if (enemyEffectTurns[2] == 0) {
+                    e.removeStatus(EntityStatus.FROSTBURN);
+                }
+            }
+        }
     }
 
     private void setStartValues(Entity player, Entity enemy) {

@@ -43,7 +43,7 @@ public class GameController {
         levels.put(level, new HashMap<>());
         createNewRoom(level, 0, 0);
         this.currentRoom = levels.get(level).get("0;0");
-
+        System.out.println("Started level:" + level);
         runGame();
     }
 
@@ -60,7 +60,10 @@ public class GameController {
                     move();
                     break;
                 case "f":
-                    battle();
+                 defeatedBoss =   battle();
+                 if(defeatedBoss){
+                    return;
+                 }
                     break;
                 case "i":
                     player.printBackpack();
@@ -169,10 +172,10 @@ public class GameController {
                 "Eune",
                 "Graff"
         };
-        double baseHealth = enemyBaseHealth;
-        double baseAttack = enemyBaseAttack;
+        double baseHealth = enemyBaseHealth+level*level-level;
+        double baseAttack = enemyBaseAttack+level*level-level;
         CharacterClass c;
-        //Bosses are 50% stronger than a regular enemy
+        //Bosses have 50% stronger base stats a regular enemy
         if (isBoss) {
             baseHealth = baseHealth * 1.5;
             baseAttack = baseAttack * 1.5;
@@ -226,45 +229,51 @@ public class GameController {
 
     private void move() {
         Command.cls();
-        String userInput = "";
-        Scanner scan = new Scanner();
-        System.out.println("Wher do you want to go?\n" +
-                "N = north\n" +
-                "E = east\n" +
-                "S = south\n" +
-                "W = west");
-        while (!userInput.equals("N") && !userInput.equals("W") && !userInput.equals("E") && !userInput.equals("S")) {
-            userInput = scan.scanString();
+        if (currentRoom.getEnemy().isAlive()) {
+            System.out.println("You need to defeat the enemy in this room first");
+        } else {
+            String userInput = "";
+            Scanner scan = new Scanner();
+            System.out.println("Wher do you want to go?\n" +
+                    "N = north\n" +
+                    "E = east\n" +
+                    "S = south\n" +
+                    "W = west");
+            while (!userInput.equals("N") && !userInput.equals("W") && !userInput.equals("E") && !userInput.equals("S")) {
+                userInput = scan.scanString();
+            }
+            System.out.println("Go" + userInput);
+            int newX = 0;
+            int newY = 0;
+            switch (userInput) {
+                case "N":
+                    newX = currentRoom.getX() + 1;
+                    newY = currentRoom.getY();
+                    break;
+                case "S":
+                    newX = currentRoom.getX() - 1;
+                    newY = currentRoom.getY();
+                    break;
+                case "E":
+                    newX = currentRoom.getX();
+                    newY = currentRoom.getY() + 1;
+                    break;
+                case "W":
+                    newX = currentRoom.getX();
+                    newY = currentRoom.getY() - 1;
+                    break;
+            }
+            createNewRoom(level, newX, newY);
+            this.currentRoom = levels.get(level).get(newX + ";" + newY);
         }
-        System.out.println("Go" + userInput);
-        int newX = 0;
-        int newY = 0;
-        switch (userInput) {
-            case "N":
-                newX = currentRoom.getX() + 1;
-                newY = currentRoom.getY();
-                break;
-            case "S":
-                newX = currentRoom.getX() - 1;
-                newY = currentRoom.getY();
-                break;
-            case "E":
-                newX = currentRoom.getX();
-                newY = currentRoom.getY() + 1;
-                break;
-            case "W":
-                newX = currentRoom.getX();
-                newY = currentRoom.getY() - 1;
-                break;
-        }
-        createNewRoom(level, newX, newY);
-        this.currentRoom = levels.get(level).get(newX + ";" + newY);
-
     }
 
-    public void battle() {
+    public boolean battle() {
         Command.cls();
         if (currentRoom.getEnemy().isAlive()) {
+            if (currentRoom.isBossRoom()) {
+                System.out.println("You are going to fight a boss!");
+            }
             bc.startBattle(player, currentRoom.getEnemy());
             if (player.isAlive()) {
                 int levelDifference = currentRoom.getEnemy().getLevel() - player.getLevel();
@@ -273,11 +282,16 @@ public class GameController {
                 }
                 player.gainEXP(currentRoom.getEnemy().getLevel() + levelDifference);
                 System.out.println("You gained: " + (currentRoom.getEnemy().getLevel() + levelDifference) + " EXP!");
-
+                if (currentRoom.isBossRoom()) {
+                    return true;
+                }else{
+                    return false;
+                }
             }
         } else {
             System.out.println("You have defeated the enemy already");
         }
+        return false;
     }
 
     public void pickupItems() {

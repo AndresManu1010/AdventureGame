@@ -112,6 +112,27 @@ public class Entity {
             return false;
         }
     }
+    public boolean isOnFire(){
+        if(statuses.contains(EntityStatus.ONFIRE)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean isFrostBurned(){
+        if(statuses.contains(EntityStatus.FROSTBURN)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean isPoisoned(){
+        if(statuses.contains(EntityStatus.POISONED)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     public int getLevel() {
         return level;
@@ -162,5 +183,15 @@ public class Entity {
 
     public void takeDamage(double dmg){
         this.currentHealth = this.currentHealth-dmg;
+    }
+    public void takeCurrentHealthDamage(double percent,String source){
+        double damage =this.currentHealth - this.currentHealth *(percent/100);
+        System.out.println(name + " took "+damage+" dmg from "+ source );
+        this.currentHealth = this.currentHealth - damage;
+    }
+    public void takeMaxLifeDamage(double percent,String source){
+        double damage = this.currentHealth - this.maxHealth *(percent/100);
+        System.out.println(name + " took "+damage+" dmg from "+ source );
+        this.currentHealth = this.currentHealth - damage;
     }
 }
