@@ -15,8 +15,6 @@ import com.company.Other.Command;
 import com.company.Other.Scanner;
 import com.company.Room.Room;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -62,7 +60,11 @@ public class GameController {
                 case "f":
                  defeatedBoss =   battle();
                  if(defeatedBoss){
-                    return;
+                     System.out.println("You picked up all the items that dropped from the boss as fast as you could.");
+                     System.out.println("//The Room shines in a brilliant shine.\n" +
+                             "Things start changing.");
+                     pickupItems();
+                    defeatedBoss = true;
                  }
                     break;
                 case "i":
@@ -89,19 +91,19 @@ public class GameController {
         String name;
         CharacterClass cClass = CharacterClass.SABER;
         String sCLass;
-        Boolean classNotDecidec = true;
+        Boolean classNotDecided = true;
         Scanner scan = new Scanner();
         System.out.println("Enter your name");
         name = scan.scanString();
         Command.cls();
-        while (classNotDecidec) {
+        while (classNotDecided) {
             System.out.println("Which class do you want to play as?");
             System.out.println("Saber\nArcher\nLancer\n" +
                     "Caster\nAssassin\nRider\n" +
                     "Berserker");
             sCLass = scan.scanString();
             Command.cls();
-            classNotDecidec = false;
+            classNotDecided = false;
             switch (sCLass) {
                 case "Saber" -> cClass = CharacterClass.SABER;
                 case "Archer" -> cClass = CharacterClass.ARCHER;
@@ -110,7 +112,7 @@ public class GameController {
                 case "Assassin" -> cClass = CharacterClass.ASSASSIN;
                 case "Rider" -> cClass = CharacterClass.RIDER;
                 case "Berserker" -> cClass = CharacterClass.BERSERKER;
-                default -> classNotDecidec = true;
+                default -> classNotDecided = true;
             }
         }
 
@@ -131,7 +133,7 @@ public class GameController {
             } else {
                 isBossRoom = false;
             }
-            Room newRoom = new Room(createRandomEnemy(isBossRoom), Database.getXRandomItems(rand.nextInt(3) + 1, isBossRoom), isBossRoom, x, y);
+            Room newRoom = new Room(createRandomEnemy(isBossRoom), Database.getXRandomItems(rand.nextInt(5) + 1, isBossRoom), isBossRoom, x, y);
             if (!levels.containsKey(level)) {
                 levels.put(level, new HashMap<>());
             }
@@ -206,7 +208,7 @@ public class GameController {
                 c = CharacterClass.SABER;
         }
 
-        return new Entity(nameList[rand.nextInt(nameList.length)], baseHealth, baseAttack, this.player.getLevel() + 1, c);
+        return new Entity(nameList[rand.nextInt(nameList.length)], baseHealth, baseAttack, this.player.getLevel(), c);
     }
 
     private void printPossibilities() {

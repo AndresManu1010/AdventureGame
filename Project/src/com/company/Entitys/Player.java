@@ -14,7 +14,6 @@ import com.company.Other.Scanner;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 public class Player extends Entity {
     private ArrayList<Item> backpack = new ArrayList<>();
     private int totalExperienceToNextLevel;
@@ -25,6 +24,27 @@ public class Player extends Entity {
         totalExperienceToNextLevel = level * level / 2;
     }
 
+    /**
+     * Prints the most important information about the player
+     */
+    @Override
+    public void printStats() {
+        System.out.println("--------------------------------");
+        System.out.println("Name: " + getName() + " LV. " + getLevel());
+        System.out.println("EXP: " + exp + "/" + totalExperienceToNextLevel);
+        System.out.println("Class: " + getEntityClass().name().toLowerCase());
+        System.out.println("Health: " + getCurrentHealth() + "/" + getMaxHealth());
+        System.out.println("Base Attack Damage: " + getBaseAttackDamage());
+        System.out.println("--------------------------------");
+    }
+
+    /**
+     * Increases the player's experience points.
+     * If the player has enough exp for a level up
+     * he level ups
+     *
+     * @param expGained the amount of exp the player recives
+     */
     public void gainEXP(int expGained) {
         this.exp += expGained;
         if (totalExperienceToNextLevel <= exp) {
@@ -34,34 +54,58 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Let's the player learn a stronger attack from a skill book.
+     */
     public void useSkillBook() {
-        Scanner scan = new Scanner();
-        ArrayList<SkillBook> skillBooks = new ArrayList<>();
-        int counter = 1;
-        int userInput = -1;
-        for (Item i : backpack) {
-            if (i instanceof SkillBook) {
-                skillBooks.add(((SkillBook) i));
-            }
+        ArrayList<SkillBook> skillBooks = getSkillbooks();
+        printSkillBooks();
+        int userInput = selectSkillBook();
+        if (userInput != -1) {
+            learnSpecificAttack(skillBooks.get(userInput).getAttack());
+            backpack.remove(skillBooks.get(userInput));
         }
+    }
+
+    /**
+     * Prints all skillbooks in the players inventory/backpack
+     * if he doesn't have any skillbooks a message will be printed out for that aswell
+     */
+    private void printSkillBooks() {
+        ArrayList<SkillBook> skillBooks = getSkillbooks();
+        int counter = 1;
         if (skillBooks.size() != 0) {
             for (SkillBook sb : skillBooks) {
                 System.out.println(counter + "" + sb.getName());
                 counter++;
             }
+        } else {
+            System.out.println("You don't have any Skill books");
+        }
+    }
+
+    /**
+     * Lets the player select the skillbook he wants to use
+     * @return the index of the skillbook in the list
+     */
+    public int selectSkillBook() {
+        int userInput = 0;
+        Scanner scan = new Scanner();
+        ArrayList<SkillBook> skillBooks = getSkillbooks();
+        if (skillBooks.size() != 0) {
             System.out.println("Which Skillbook do you want to use?\n" +
                     "Please enter its number");
             while (userInput < 1 || userInput > skillBooks.size()) {
                 userInput = scan.scanInt();
             }
-            userInput = userInput-1;
-            learnSpecificAttack(skillBooks.get(userInput).getAttack());
-            backpack.remove(skillBooks.get(userInput));
-        }else{
-            System.out.println("You don't have any Skill books");
+            return userInput - 1;
         }
+        return -1;
     }
 
+    /**
+     * Lets the player select a healing potion to use
+     */
     public void useHealingPotion() {
         Scanner scan = new Scanner();
         ArrayList<HealingPotion> healingPotions = new ArrayList<>();
@@ -85,7 +129,7 @@ public class Player extends Entity {
             userInput = userInput - 1;
             healFlat(healingPotions.get(userInput).usePotion());
             if (healingPotions.get(userInput).getRemainingUses() == 0) {
-              backpack.remove(healingPotions.get(userInput));
+                backpack.remove(healingPotions.get(userInput));
             }
         } else {
             System.out.println("You don't have any potions");
@@ -93,10 +137,17 @@ public class Player extends Entity {
 
     }
 
+    /**
+     * Adds an item to the backpack
+     * @param i the item that gets added
+     */
     public void addToBackpack(Item i) {
         backpack.add(i);
     }
 
+    /**
+     * Prints the contents of the players backpack
+     */
     public void printBackpack() {
         int counter = 1;
         for (Item i : backpack) {
@@ -104,5 +155,17 @@ public class Player extends Entity {
         }
     }
 
-
+    /**
+     *
+     * @return returns the all the players skillbooks
+     */
+    private ArrayList<SkillBook> getSkillbooks() {
+        ArrayList<SkillBook> skillBooks = new ArrayList<>();
+        for (Item i : backpack) {
+            if (i instanceof SkillBook) {
+                skillBooks.add(((SkillBook) i));
+            }
+        }
+        return skillBooks;
+    }
 }

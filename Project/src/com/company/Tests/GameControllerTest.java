@@ -22,8 +22,6 @@ Beschreibung:
 
 class GameControllerTest {
     GameController gc = new GameController();
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
 
 
     @Test

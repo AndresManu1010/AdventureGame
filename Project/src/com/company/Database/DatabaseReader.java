@@ -20,6 +20,10 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class DatabaseReader {
+    /**
+     * Reads all attacks in the com/company/Attacks/Attacks folder
+     * @return returns read attacks
+     */
     public HashMap<CharacterClass, ArrayList<Attack>> readAttacks() {
         HashMap<CharacterClass, ArrayList<Attack>> attackList = new HashMap<>();
         CharacterClass[] attackClassesToRead = {
@@ -69,6 +73,10 @@ public class DatabaseReader {
         return attackList;
     }
 
+    /**
+     * Reads all skillbooks in com/company/Items/BluePrints/skillBook.txt
+     * @return the read SkillBooks
+     */
     public ArrayList<SkillBook> readSkillBooks() {
         ArrayList<SkillBook> skillBooks = new ArrayList<>();
         try {
@@ -115,6 +123,10 @@ public class DatabaseReader {
         return skillBooks;
     }
 
+    /**
+     * Reads all healingPotions in com/company/Items/BluePrints/HealthPotion.txt
+     * @return the read HealingPotions
+     */
     public ArrayList<HealingPotion> readHealingPotions() {
         ArrayList<HealingPotion> healingPotions = new ArrayList<>();
         try {

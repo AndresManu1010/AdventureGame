@@ -24,6 +24,14 @@ public class HealingPotion extends Item {
         this.remainingUses = healingPotion.remainingUses;
     }
 
+    /**
+     * Using the potion reduces the remaining uses
+     * @return the amount to be healed
+     */
+    public double usePotion() {
+        remainingUses--;
+        return heals;
+    }
 
     public double getHeals() {
         return heals;
@@ -33,8 +41,5 @@ public class HealingPotion extends Item {
         return remainingUses;
     }
 
-    public double usePotion() {
-        remainingUses--;
-        return heals;
-    }
+
 }

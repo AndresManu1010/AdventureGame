@@ -13,7 +13,6 @@ import com.company.Enums.AttackType;
 import com.company.Enums.EntityStatus;
 import com.company.Tables.StrengthWeakness;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
@@ -28,6 +27,11 @@ public class BattleController {
     private int[] playerEffectTurns = {0, 0, 0};
     private int[] enemyEffectTurns = {0, 0, 0};
 
+    /**
+     * Starts the battle between the two Parameters
+     * @param playerP will be controlled by the player
+     * @param enemyP will be controlled by random chances
+     */
     public void startBattle(Entity playerP, Entity enemyP) {
         setStartValues(playerP, enemyP);
         System.out.println("You are Facing:");
@@ -62,10 +66,15 @@ public class BattleController {
             System.out.println("|-------------------------------------------------------------|");
         }
     }
-    private void playerAttack() {
-        String choice = "";
+
+    /**
+     * Used to scan the
+     * @return
+     */
+    private String scanPlayerAttack(){
+        String userInput = "";
         Scanner scan = new Scanner(System.in);
-        double dmg;
+
         boolean validAttack = false;
 
         System.out.println(Color.GREEN + "Player health : " + player.getCurrentHealth() + Color.RESET);
@@ -88,20 +97,33 @@ public class BattleController {
 
         System.out.print("Attack : ");
         while (!validAttack) {
-            choice = scan.nextLine();
+            userInput = scan.nextLine();
 
 
-            if (player.getAttacks().containsKey(choice)) {
+            if (player.getAttacks().containsKey(userInput)) {
                 validAttack = true;
             }
         }
-        lastPlayerAttackType = currentPlayerAttackType;
-        currentPlayerAttackType = player.getAttacks().get(choice).getType();
+        return userInput;
+    }
 
-        dmg = calcDMG((player.getAttacks().get(choice).getDamage() + player.getBaseAttackDamage()), baseMultiplier(player.getName()),elementalReaction(true), classAdvantage(true));
+    /**
+     * used by the player to select his attack ot attack the enemy
+     */
+    private void playerAttack() {
+    String userInput = scanPlayerAttack();
+    double dmg;
+        lastPlayerAttackType = currentPlayerAttackType;
+        currentPlayerAttackType = player.getAttacks().get(userInput).getType();
+
+        dmg = calcDMG((player.getAttacks().get(userInput).getDamage() + player.getBaseAttackDamage()), baseMultiplier(player.getName()),elementalReaction(true), classAdvantage(true));
         enemy.takeDamage(dmg);
         System.out.printf("You dealt %.0f DMG\n", dmg);
     }
+
+    /**
+     * Enemy chooses a attack randomly and deals damage to the player
+     */
     private void enemyAttack() {
         Attack attack = enemy.getRandomAttack();
         double dmg = attack.getDamage();
@@ -114,7 +136,13 @@ public class BattleController {
         System.out.printf("You took %.0f DMG\n", dmg);
 
     }
-    private double baseMultiplier(String attackerName){
+
+    /**
+     * used to get a base multiplier
+     * @param attackerName the attacks name will be used if it lands a critical hit
+     * @return the multiplier
+     */
+    public double baseMultiplier(String attackerName){
        Random rand = new Random();
     double multiplier;
     double randNum = rand.nextInt(10) + 1;
@@ -131,18 +159,30 @@ public class BattleController {
     }
     return multiplier;
 }
-    private double calcDMG(double dmg, double baseMultiplier,double elementalReactionMultiplier, double classAdvantageMultiplier) {
 
-
+    /**
+     * Used to calculate the damage
+     * @param dmg flat base damage
+     * @param baseMultiplier a base multiplier
+     * @param elementalReactionMultiplier a multiplier based on elemental reactions
+     * @param classAdvantageMultiplier a multiplier based on advantages/disadvantages
+     * @return
+     */
+    public double calcDMG(double dmg, double baseMultiplier,double elementalReactionMultiplier, double classAdvantageMultiplier) {
         double multiplier = 1;
-
-
         multiplier = multiplier * baseMultiplier * elementalReactionMultiplier * classAdvantageMultiplier;
         System.out.println(Color.YELLOW + "Multiplier : " + multiplier + Color.RESET);
         dmg = ((int) (dmg * multiplier));
         return dmg;
     }
-    private double elementalReaction(boolean isPlayerAttack) {
+
+    /**
+     * Used to make elemental reactions
+     * Based on an entity's last two attacks something might happen
+     * @param isPlayerAttack if the elemental reaction is caused by the player or not
+     * @return the multiplier
+     */
+    public double elementalReaction(boolean isPlayerAttack) {
         double elementalBonus = 1;
         AttackType lastAttackType;
         AttackType currentAttackType;
@@ -312,6 +352,12 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
         System.out.print(Color.RESET);
         return elementalBonus;
     }
+
+    /**
+     * Returns a double multiplier based on a table
+     * @param isPlayerAttack to decide who the attacker and defender is
+     * @return the multiplier
+     */
     private double classAdvantage(boolean isPlayerAttack) {
         int attackerClass = 0;
         int defenderClass = 0;
@@ -351,6 +397,12 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             default -> 1;
         };
     }
+
+    /**
+     * Used to call damaging methodes
+     * @param e the entity
+     * @param isPlayer if the entity is a player or not
+     */
     private void dealDotDMG(Entity e, boolean isPlayer) {
 
         if (e.isPoisoned()) {
@@ -397,7 +449,12 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
         }
     }
 
-    private void setStartValues(Entity player, Entity enemy) {
+    /**
+     * resets the Battlecontroller and changes the player and enemy
+     * @param player
+     * @param enemy
+     */
+    public void setStartValues(Entity player, Entity enemy) {
         this.player = player;
         this.enemy = enemy;
         lastPlayerAttackType = AttackType.NONE;

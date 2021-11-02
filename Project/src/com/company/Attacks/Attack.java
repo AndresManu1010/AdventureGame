@@ -23,6 +23,11 @@ public class Attack {
         this.type = copyThis.type;
     }
 
+    /**
+     * Increases the damage the Attack deals
+     * @param dmgMultiplier the multiplier in percent ex: 50% = 0.5
+     * @return returns the new damage variable
+     */
     public double upgradeDamage(double dmgMultiplier){
         this.damage= this.damage * (1+ dmgMultiplier) + 3;
         return this.damage;
