@@ -29,7 +29,7 @@ public class Attack {
      * @return returns the new damage variable
      */
     public double upgradeDamage(double dmgMultiplier){
-        this.damage= this.damage * (1+ dmgMultiplier) + 3;
+        this.damage= this.damage * (1+ dmgMultiplier) + 2;
         return this.damage;
     }
 

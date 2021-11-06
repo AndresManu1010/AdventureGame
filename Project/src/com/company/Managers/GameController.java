@@ -244,7 +244,6 @@ public class GameController {
             while (!userInput.equals("N") && !userInput.equals("W") && !userInput.equals("E") && !userInput.equals("S")) {
                 userInput = scan.scanString();
             }
-            System.out.println("Go" + userInput);
             int newX = 0;
             int newY = 0;
             switch (userInput) {

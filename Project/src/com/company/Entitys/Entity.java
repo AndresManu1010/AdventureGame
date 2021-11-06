@@ -46,7 +46,7 @@ public class Entity {
     public void levelUp(boolean printMessage) {
         Random rand = new Random();
         this.level++;
-        int attackIncrease = rand.nextInt(((int) this.baseAttackDamage / 100 + level)) + 1 + level / 2;
+        int attackIncrease = rand.nextInt(((int) this.baseAttackDamage / 100 + level)) + 1 + level / 3;
         int healthIncrease = rand.nextInt(((int) this.maxHealth / 100 + level)) + 7 + level / 2;
         this.baseAttackDamage += attackIncrease;
         this.maxHealth += healthIncrease;
