@@ -11,6 +11,22 @@ Final <br>
   
   
 How to run?<br>
-
 Works best if you run the game in windows command promt with the Project.jar being in the Project root folder.<br>
+java -jar Project.jar
 Intellij Also works fine but does not clear the console.<br>
+
+
+But what excactly is this game?<br>
+It is a rouge like dungeon game where you go from room to room and fight enemies.<br>
+At the start of the game you will create your character with a name and a class of your choosing!<br>
+
+You will be able to learn powerfull attacks by using skill books.<br>
+There is only one way to heal yourself, and that is with potions.<br>
+
+What makes this game stand out is its combat mechanic regarding "Elemental Reactions"<br>
+They make you deal more damage, give your enemy a debuff, or heal you.<br>
+This is all based on the order of your attacks.<br>
+I encourage you to experiment with attack orders.<br>
+
+Note:<br>
+The game may not be perfectly balanced.
